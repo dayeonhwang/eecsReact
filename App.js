@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, NavigatorIOS, AppRegistry, SectionList, Button, Image, FlatList, Alert } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem,SearchBar } from 'react-native-elements';
 import { Constants } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import EmojiSelector from 'react-native-emoji-selector';
+import Accordion from 'react-native-collapsible/Accordion';
 
 class LogoTitle extends React.Component {
   render() {
@@ -45,7 +46,7 @@ class HomeScreen extends React.Component {
             var title = item.title;
             var subtitle = item.subtitle;
             this.props.navigation.navigate('Details', {
-              titleParam: title,
+              titleParam: title, subtitle
             });
           }}
         />}
@@ -56,7 +57,6 @@ class HomeScreen extends React.Component {
 
 class DetailsScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
-    //console.log(navigationOptions);
     return {
       title: navigation.getParam('titleParam', 'A Nested Details Screen'),
       headerStyle: {
@@ -67,36 +67,13 @@ class DetailsScreen extends React.Component {
   };
 
   render() {
-    /* 2. Get the param, provide a fallback value if not available */
     const { navigation } = this.props;
     const itemId = navigation.getParam('itemId', 'NO-ID');
     const titleParam = navigation.getParam('titleParam', 'some default value');
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        // <Text>Details Screen</Text>
-        // <Text>itemId: {JSON.stringify(itemId)}</Text>
-        // <Text>titleParam: {JSON.stringify(titleParam)}</Text>
-        <Button
-          title="Go to Details... again"
-          onPress={() =>
-            this.props.navigation.push('Details', {
-              itemId: Math.floor(Math.random() * 100),
-            })}
-        />
-        <Button
-          title="Update the title"
-          onPress={() =>
-            this.props.navigation.setParams({ titleParam: 'Updated!' })}
-        />
-        <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.navigate('Home')}
-        />
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
+        <Text>titleParam</Text>
       </View>
     );
   }
@@ -137,4 +114,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  search: {
+    flex: 1,
+  },
+  searchInput: {
+    flex: 1,
+  }
 });
